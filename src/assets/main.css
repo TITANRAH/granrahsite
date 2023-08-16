@@ -103,7 +103,7 @@ header {
 }
 
 .logo img {
-    width: 30rem;
+    width: 16rem;
     margin-bottom: 20px;
 }
 
@@ -126,6 +126,11 @@ header {
 .hero-content h1 {
     font-size: 10rem;
     margin-bottom: 15px;
+    translate: none;
+    rotate: none;
+    scale: none;
+    opacity: 0.6;
+    transform: translate(0px, 0px);
 }
 
 .hero-content p {
@@ -158,11 +163,13 @@ header {
 
 .noticias-info{
     width: 70%;
+    height: 100vh;
 }
 
-.noticias-img{
-    width: 40%;
-    padding: 4rem 4rem 4rem 0;
+.noticias-img {
+    width: 25%;
+    padding: 4rem 0 4rem 0;
+    margin: auto;
 }
 .noticias-img img{
     width: 100%;

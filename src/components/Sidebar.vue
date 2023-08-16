@@ -1,68 +1,8 @@
-<!--         
-<script setup>
-import { ref, onMounted } from 'vue';
-import { gsap } from 'gsap';
-
-const logoImg = ref(null);
-const routes = [
-    { name: 'news', text: 'Noticias', color: '#222222' },
-    { name: 'about', text: 'Acerca de mi', color: '#64676D' },
-    { name: 'musica', text: 'Música', color: '#95AABF' },
-    { name: 'biography', text: 'Biografía', color: ' #B2B0AC' },
-    { name: 'contact', text: 'Contacto', color: '#D0CCC6' },
-    { name: 'gallery', text: 'Galería', color: '#EEEFEC' },
-];
-
-
-onMounted(() => {
-//   animateHeroEntrance();
-  animateMenuEntrance();
-  animateLogoRotation();
-
-  
-});
-const animateMenuEntrance = () => {
-    gsap.from('.menu-item', {
-        x: 1000,
-        opacity: 0,
-        stagger: 0.2,
-        duration: 1.5,
-        ease: 'power3.out',
-    });
-};
-
-const animateLogoRotation = () => {
-    gsap.from(logoImg.value, {
-    x: -1000, // Mueve desde la izquierda
-    rotate: -180, // Gira desde atrás
-    opacity: 0, // Comienza con opacidad cero
-    duration: 1.5,
-    ease: 'power3.out',
-  });
-};
-</script>
-<template>
-    <div class="menu-container">
-        <div class="menu-items">
-            <div class="logo">
-                <img ref="logoImg" src="../assets/img/logo-gran.png" alt="Logo" />
-            </div>
-            <div v-for="(ruta, index) in routes" :key="ruta.name" class="menu-item">
-                <a class="menu-link" :href="'#' + ruta.name" @click="">
-                    {{ ruta.text }}
-                </a>
-            </div>
-        </div>
-    </div>
-</template>
-
-<style lang="scss" scoped></style> -->
-
 <template>
     <div class="menu-container">
       <div class="menu-items">
-        <div class="logo">
-          <img ref="logoImg" src="../assets/img/logo-gran.png" alt="Logo" />
+        <div class="logo" >
+        <a href="#"><img ref="logoImg" src="../assets/img/logo-gran.png" alt="Logo" /></a>  
         </div>
         <div
           v-for="(ruta, index) in routes"
@@ -82,9 +22,11 @@ const animateLogoRotation = () => {
   </template>
   
   <script setup>
-  import { ref } from 'vue';
+  import { ref, onMounted } from 'vue';
+  import { gsap } from 'gsap';
   
-  const activeRoute = ref('news'); // Ruta activa por defecto
+  const logoImg = ref(null);
+  const activeRoute = ref('');
   
   const routes = [
     { name: 'news', text: 'Noticias', color: '#222222' },
@@ -93,8 +35,35 @@ const animateLogoRotation = () => {
     { name: 'biography', text: 'Biografía', color: ' #B2B0AC' },
     { name: 'contact', text: 'Contacto', color: '#D0CCC6' },
     { name: 'gallery', text: 'Galería', color: '#EEEFEC' },
-];
-
+  ];
+  
+  onMounted(() => {
+    animateSidebarEntrance();
+  });
+  
+  const animateSidebarEntrance = () => {
+    const menuItems = document.querySelectorAll('.menu-item');
+  
+    gsap.set(menuItems, { x: 100, opacity: 0 });
+  
+    gsap.to(menuItems, {
+      x: 0,
+      opacity: 1,
+      duration: 0.8,
+      ease: 'power3.out',
+      stagger: 0.15,
+      delay: 0.5,
+    });
+  
+    gsap.from(logoImg.value, {
+      x: -100,
+      rotate: -180,
+      opacity: 0,
+      duration: 1,
+      ease: 'power3.out',
+      delay: 0.5,
+    });
+  };
   
   const setActiveRoute = (routeName) => {
     activeRoute.value = routeName;
@@ -110,17 +79,15 @@ const animateLogoRotation = () => {
   .menu-items {
     display: flex;
     flex-direction: column;
-    align-items: center;
-  }
-  
-  .logo {
-    margin-bottom: 20px;
+    align-items: flex-end;
+    margin-right: 0.4rem;
   }
   
   .menu-item {
     padding: 10px 15px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.3s;
+    transform-origin: right center;
   }
   
   .menu-item.active {
@@ -137,4 +104,9 @@ const animateLogoRotation = () => {
   .menu-item.active .menu-link {
     color: black;
   }
+  
+  .logo {
+    margin-bottom: 20px;
+  }
   </style>
+  
